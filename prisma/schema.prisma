@@ -1,0 +1,36 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+//RESOURCE
+//https://www.eversql.com/sql-to-prisma
+//CRIAR TABLES
+//npx prisma db push
+
+model Pessoa {
+id Int @id @default(autoincrement())
+nome String @db.VarChar(300)
+idade Int?
+email String? @db.VarChar(100)
+vendasAsCliente Venda[] @relation("ClienteVendas")
+vendasAsVendedor Venda[] @relation("VendedorVendas")
+}
+
+model Venda {
+id Int @id @default(autoincrement())
+data DateTime @db.Date
+quantidade Decimal @db.Decimal(10, 4)
+valor Decimal @db.Decimal(10, 4)
+clienteId Int?
+vendedorId Int?
+
+cliente Pessoa? @relation("ClienteVendas", fields: [clienteId], references: [id])
+vendedor Pessoa? @relation("VendedorVendas", fields: [vendedorId], references: [id])
+}
