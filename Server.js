@@ -6,16 +6,6 @@ const prisma = new PrismaClient()
 const app = express()
 app.use(express.json())
 
-
-
-/*
-1) Tipo de rota(GET/PUT/patch/Post/Delete)
-2) End.
-*/
-const users = ['aa']
-//POST
-
-
  app.post('/usuarios', async(req, res)=>
 {
     await prisma.pessoa.create ( 
